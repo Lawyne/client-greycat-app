@@ -27,7 +27,7 @@ const options = {
   height: '60px',
   stack: false,
   showMajorLabels: true,
-  showCurrentTime: true,
+  showCurrentTime: false,
   zoomMin: 1000000,
 
   format: {
@@ -50,6 +50,19 @@ const train = {
 }
 
 const trainIcon = L.icon(train);
+
+const car = {
+                  iconUrl: 'Car.png',
+                  shadowUrl: 'ShadowCar.png',
+
+                  iconSize:   [50,50],
+                  shadowSize: [70,70],
+                  iconAnchor:   [25, 50],
+                  shadowAnchor: [35, 60],
+                  popupAnchor:  [-3, -76]
+}
+
+const carIcon = L.icon(car);
 
 function stringifyObject (object) {
       if (!object) return;
@@ -214,7 +227,7 @@ class MyMap extends React.Component {
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
-          <Marker position={position} icon={trainIcon}>
+          <Marker position={position}>
             <Popup>
               <span>Blabla.<br/>Blablabla.</span>
             </Popup>
@@ -229,14 +242,20 @@ class TimeMap extends Component {
   constructor() {
     super();
     this.state = {
-      markers: [[49.62559, 6.160]]
+      carMarkers: [[49.62559, 6.160]],
+      trainMarkers: [],
+      isCar: false
     };
   }
 
   addMarker = (e) => {
-    const {markers} = this.state
-    markers.push(e.latlng)
-    this.setState({markers})
+    const {carMarkers,trainMarkers,isCar} = this.state
+    if (isCar)
+    {carMarkers.push(e.latlng)}
+    else{trainMarkers.push(e.latlng)}
+    this.setState({carMarkers,trainMarkers,
+      isCar: !this.state.isCar})
+
   }
 
   render() {
@@ -253,10 +272,17 @@ class TimeMap extends Component {
            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
            url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
          />
-         {this.state.markers.map((position, idx) =>
+         {this.state.carMarkers.map((position, idx) =>
+           <Marker key={`marker-${idx}`} position={position} icon={carIcon}>
+           <Popup>
+             <span>I'm a car. <br/> Easily customizable.</span>
+           </Popup>
+         </Marker>
+         )}
+         {this.state.trainMarkers.map((position, idx) =>
            <Marker key={`marker-${idx}`} position={position} icon={trainIcon}>
            <Popup>
-             <span>A pretty CSS3 popup. <br/> Easily customizable.</span>
+             <span>I'm a train. <br/> Easily customizable.</span>
            </Popup>
          </Marker>
          )}
