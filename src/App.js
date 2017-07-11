@@ -111,7 +111,7 @@ class timeline extends Timeline{
     <div>
         <Timeline
             options={options}
-            clickHandler={clickHandler}
+            clickHandler={logEvent}
 
         >
             Blabla
@@ -275,14 +275,14 @@ class TimeMap extends Component {
          {this.state.carMarkers.map((position, idx) =>
            <Marker key={`marker-${idx}`} position={position} icon={carIcon}>
            <Popup>
-             <span>I'm a car. <br/> Easily customizable.</span>
+             <span>I'm a car. <br/> lat: {position[0]}<br/> lng: {position[1]}</span>
            </Popup>
          </Marker>
          )}
          {this.state.trainMarkers.map((position, idx) =>
            <Marker key={`marker-${idx}`} position={position} icon={trainIcon}>
            <Popup>
-             <span>I'm a train. <br/> Easily customizable.</span>
+             <span>I'm a train. <br/> lat: {position[0]}<br/> lng: {position[1]}</span>
            </Popup>
          </Marker>
          )}
