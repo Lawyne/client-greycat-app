@@ -83,6 +83,13 @@ function logEvent(properties) {
       log.firstChild ? log.insertBefore(msg, log.firstChild) : log.appendChild(msg);
 }
 
+function logPose(position) {
+      var log = document.getElementById('log');
+      var msg = document.createElement('div');
+      msg.innerHTML = 'pos=' + position;
+      log.firstChild ? log.insertBefore(msg, log.firstChild) : log.appendChild(msg);
+}
+
 function clickHandler(props){
     logEvent(props);
 }
@@ -251,8 +258,10 @@ class TimeMap extends Component {
   addMarker = (e) => {
     const {carMarkers,trainMarkers,isCar} = this.state
     if (isCar)
-    {carMarkers.push(e.latlng)}
-    else{trainMarkers.push(e.latlng)}
+    {carMarkers.push([e.latlng.lat,e.latlng.lng])}
+    else{trainMarkers.push([e.latlng.lat,e.latlng.lng])}
+
+    logPose(e.latlng);
     this.setState({carMarkers,trainMarkers,
       isCar: !this.state.isCar})
 
@@ -273,14 +282,14 @@ class TimeMap extends Component {
            url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
          />
          {this.state.carMarkers.map((position, idx) =>
-           <Marker key={`marker-${idx}`} position={position} icon={carIcon}>
+           <Marker key={`carMarker-${idx}`} position={position} icon={carIcon}>
            <Popup>
              <span>I'm a car. <br/> lat: {position[0]}<br/> lng: {position[1]}</span>
            </Popup>
          </Marker>
          )}
          {this.state.trainMarkers.map((position, idx) =>
-           <Marker key={`marker-${idx}`} position={position} icon={trainIcon}>
+           <Marker key={`trainMarker-${idx}`} position={position} icon={trainIcon}>
            <Popup>
              <span>I'm a train. <br/> lat: {position[0]}<br/> lng: {position[1]}</span>
            </Popup>
@@ -292,7 +301,7 @@ class TimeMap extends Component {
       <div className = "time">
                   <Timeline
                       options={options}
-                      clickHandler={clickHandler}
+                      clickHandler={logEvent}
                   />
       </div>
 
