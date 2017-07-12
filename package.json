@@ -16,6 +16,7 @@
     "js": "^0.1.0",
     "leaflet": "1.0.3",
     "leaflet-css": "^0.1.0",
+    "moment": "^2.18.1",
     "react": "^15.6.1",
     "react-d3-library": "^1.1.8",
     "react-d3-map": "^0.8.3",

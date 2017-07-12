@@ -8,6 +8,7 @@ import HorizontalScrollbar from 'react-scrollbar-js';
 import HorizontalTimeline from 'react-horizontal-timeline';
 import Timeline from 'react-visjs-timeline';
 import {Graph, GraphBuilder} from 'greycat';
+import moment from 'moment';
 
 import { scaleLinear } from 'd3-scale';
 import { max } from 'd3-array';
@@ -29,6 +30,8 @@ const options = {
   showMajorLabels: true,
   showCurrentTime: false,
   zoomMin: 1000000,
+  min: new Date(2017, 6, 10),
+  max: new Date(2017, 6, 15),
 
   format: {
     minorLabels: {
@@ -36,6 +39,15 @@ const options = {
       hour: 'ha'
     }
   }
+}
+
+
+function toUTC (date) {
+    return Date.UTC(date.getUTCFullYear(),date.getUTCMonth(),date.getUTCDate(),date.getUTCHours(),date.getUTCMinutes(),date.getUTCSeconds(),date.getUTCMilliseconds());
+}
+
+function toDate (utc) {
+    return new Date(utc)
 }
 
 const train = {
@@ -79,7 +91,7 @@ function stringifyObject (object) {
 function logEvent(properties) {
       var log = document.getElementById('log');
       var msg = document.createElement('div');
-      msg.innerHTML = 'time=' + properties.time;
+      msg.innerHTML = 'time=' + properties.time.getTime() ;
       log.firstChild ? log.insertBefore(msg, log.firstChild) : log.appendChild(msg);
 }
 
