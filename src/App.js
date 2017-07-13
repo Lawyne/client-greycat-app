@@ -41,6 +41,13 @@ const options = {
   }
 }
 
+function serverAddress() {
+    var address = prompt("Server address ?", "localhost:3000")
+    if (address != null) {
+            document.getElementById("App-intro").innerHTML =
+            "Hello " + address + "! How are you today?";
+        }
+}
 
 function toUTC (date) {
     return Date.UTC(date.getUTCFullYear(),date.getUTCMonth(),date.getUTCDate(),date.getUTCHours(),date.getUTCMinutes(),date.getUTCSeconds(),date.getUTCMilliseconds());
@@ -109,6 +116,8 @@ function clickHandler(props){
 function test() {
         this.width = this.width*0.9;
 }
+
+
 
 class timeline extends Timeline{
     constructor(props) {
@@ -357,17 +366,17 @@ class App extends Component {
   render() {
 
     return (
-      <div className="App">
+      <div className="App" >
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <p className="App-intro">
+        <p className="App-intro" id="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
           Un, deux. Un, deux.
         </p>
 
-        <div className="Map">
+        <div className="Map" >
               <TimeMap/>
         </div>
       </div>
