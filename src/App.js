@@ -372,8 +372,7 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
         <p className="App-intro" id="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-          Un, deux. Un, deux.
+          Type your greycat server address to start.
         </p>
 
         <div className="Map" >
